@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10243a">
+<title>LAB JOB RADAR — Madagascar</title>
+<style>
+:root{--navy:#10243a;--blue:#1d5d87;--cyan:#2aa6a1;--bg:#f3f6fa;--ink:#172536;--muted:#66778a;--line:#dce4ec;--white:#fff;--green:#16845b;--amber:#b97816;--red:#b44747}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(120deg,#10243a,#174d6d);color:white;padding:22px max(18px,calc((100% - 1180px)/2));}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#ffffff18;display:grid;place-items:center;font-size:25px}.brand h1{font-size:21px;letter-spacing:.06em;margin:0}.brand p{margin:2px 0 0;color:#c7d8e7;font-size:11px;letter-spacing:.13em}.status{border:1px solid #ffffff50;border-radius:30px;padding:7px 12px;font-size:12px;color:#e3f5f2}
+main{max-width:1180px;margin:24px auto;padding:0 18px 60px}.hero{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}.hero h2{font-size:26px;margin:0 0 4px}.hero p{color:var(--muted);margin:0}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:650;cursor:pointer;background:var(--blue);color:white}.btn.secondary{background:#e8eff5;color:var(--navy)}.btn.green{background:var(--green)}.btn.danger{background:#f8eaea;color:var(--red)}.btn.small{padding:7px 10px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat,.panel{background:var(--white);border:1px solid var(--line);border-radius:15px;box-shadow:0 3px 14px #1c385008}.stat{padding:16px}.stat span{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:27px;margin-top:4px}.layout{display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:start}.panel{padding:18px;margin-bottom:16px}.panel h3{margin:0 0 14px;font-size:17px}.filters{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:9px;margin-bottom:14px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:white;color:var(--ink);font:inherit}label{font-size:12px;color:var(--muted);display:block;margin:0 0 5px}.field{margin-bottom:11px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.jobs{display:grid;gap:10px}.job{border:1px solid var(--line);border-radius:12px;padding:14px}.jobtop{display:flex;justify-content:space-between;gap:10px}.job h4{margin:0;font-size:15px}.company{color:var(--muted);font-size:13px;margin:2px 0 9px}.tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tag{font-size:11px;border-radius:20px;padding:4px 8px;background:#edf3f8;color:#38536b}.tag.ok{background:#e4f5ed;color:#16704e}.tag.warn{background:#fff3df;color:#926015}.tag.bad{background:#fae9e9;color:#a13d3d}.job p{font-size:13px;color:#526477;margin:6px 0}.jobactions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}.muted{color:var(--muted);font-size:12px}.notice{background:#fff8e9;border:1px solid #f0dfb9;padding:12px;border-radius:10px;color:#74531e;font-size:12px;margin-top:12px}.switchline{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.switchline:last-child{border:0}.switchline input{width:auto}.hidden{display:none!important}.footer{text-align:center;color:var(--muted);font-size:11px;margin-top:20px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.hero{display:block}.hero .btn{margin-top:12px}.filters,.formgrid{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:23px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand"><div class="logo">🔬</div><div><h1>LAB JOB RADAR</h1><p>MADAGASCAR · EMPLOI EN LABORATOIRE</p></div></div><div class="status">● Tableau de bord local · Administrateur</div></div></header>
+<main>
+<section class="hero"><div><h2>Surveille tes opportunités</h2><p>Centralise les offres de Technicien de Laboratoire et suis tes candidatures.</p></div><button class="btn" onclick="document.getElementById('title').focus()">＋ Ajouter une offre</button></section>
+<section class="stats">
+<div class="stat"><span>Offres enregistrées</span><strong id="total">0</strong></div>
+<div class="stat"><span>Offres vérifiées et ouvertes</span><strong id="verified">0</strong></div>
+<div class="stat"><span>À vérifier</span><strong id="pending">0</strong></div>
+<div class="stat"><span>Candidatures envoyées</span><strong id="applied">0</strong></div>
+</section>
+<div class="layout">
+<div>
+<section class="panel"><h3>Offres d'emploi</h3>
+<div class="filters">
+<input id="search" placeholder="Rechercher un poste, organisme…" oninput="render()">
+<select id="region" onchange="render()"><option value="">Toutes les régions</option><option>Toamasina</option><option>Antananarivo</option><option>Autres régions</option></select>
+<select id="state" onchange="render()"><option value="">Tous les statuts</option><option value="verified">Vérifiée / ouverte</option><option value="pending">À vérifier</option><option value="applied">Candidature envoyée</option><option value="closed">Clôturée</option></select>
+</div><div id="jobs" class="jobs"><div class="empty">Aucune offre enregistrée. Ajoute une annonce pour commencer ton suivi.</div></div>
+</section>
+<section class="panel"><h3>Ajouter une offre</h3>
+<form id="jobform">
+<div class="field"><label for="title">Intitulé du poste *</label><input id="title" required placeholder="Ex. Technicien(ne) de laboratoire"></div>
+<div class="formgrid">
+<div class="field"><label for="org">Organisme / employeur *</label><input id="org" required placeholder="Nom du laboratoire"></div>
+<div class="field"><label for="city">Ville / région *</label><select id="city" required><option value="">Choisir</option><option>Toamasina</option><option>Antananarivo</option><option>Autres régions</option></select></div>
+<div class="field"><label for="deadline">Date limite</label><input id="deadline" type="date"></div>
+<div class="field"><label for="source">Lien de l'annonce</label><input id="source" type="url" placeholder="https://…"></div>
+</div>
+<div class="field"><label for="details">Exigences / description</label><textarea id="details" rows="3" placeholder="Diplôme, expérience, missions…"></textarea></div>
+<div class="field"><label for="contact">Email ou téléphone de candidature</label><input id="contact" placeholder="Contact publié dans l'annonce"></div>
+<button class="btn green" type="submit">Enregistrer l'offre</button>
+</form>
+</section>
+</div>
+<aside>
+<section class="panel"><h3>Mes alertes</h3>
+<div class="switchline"><div><b>Email</b><div class="muted">Préparer un message d'alerte</div></div><input id="emailOn" type="checkbox" checked></div>
+<div class="switchline"><div><b>WhatsApp</b><div class="muted">Ouvrir un message prérempli</div></div><input id="waOn" type="checkbox" checked></div>
+<div class="switchline"><div><b>Navigateur</b><div class="muted">Notification si le site est ouvert</div></div><input id="browserOn" type="checkbox" checked></div>
+<div class="field" style="margin-top:13px"><label for="emailTo">Ton adresse email (pour préparer les alertes)</label><input id="emailTo" type="email" placeholder="tonadresse@email.com"></div>
+<div class="field"><label for="phone">Ton WhatsApp avec indicatif pays</label><input id="phone" placeholder="Ex. +261 3X XX XXX XX"></div>
+<button class="btn secondary small" onclick="askNotifications()">Activer les notifications navigateur</button>
+<div class="notice">Important : cette version est un prototype autonome. Elle ne recherche pas encore automatiquement sur Internet et ne peut pas envoyer des emails/WhatsApp en arrière-plan. Les alertes email et WhatsApp sont préparées à l'écran. Une mise en ligne avec serveur et services connectés sera nécessaire pour l'automatisation réelle.</div>
+</section>
+<section class="panel"><h3>Profil de recherche</h3>
+<p class="muted">Critères préconfigurés pour ton profil :</p>
+<div class="tags"><span class="tag">Technicien de laboratoire</span><span class="tag">Laborantin</span><span class="tag">Bactériologie</span><span class="tag">Microbiologie</span><span class="tag">Prélèvements</span><span class="tag">Contrôle qualité</span></div>
+<p class="muted"><b>Priorités géographiques :</b><br>1. Toamasina<br>2. Antananarivo<br>3. Autres régions de Madagascar</p>
+<p class="muted">Diplôme : Technicien de laboratoire d'analyses médicales (SEFAM). Mobilité : possible.</p>
+</section>
+<section class="panel"><h3>Données & administration</h3>
+<div class="jobactions"><button class="btn secondary small" onclick="exportData()">Exporter mes données</button><button class="btn secondary small" onclick="document.getElementById('importFile').click()">Importer</button><input id="importFile" class="hidden" type="file" accept="application/json" onchange="importData(event)"></div>
+<p class="muted">Les données sont conservées dans le stockage local de ce navigateur. Elles ne sont pas synchronisées entre appareils.</p>
+<button class="btn danger small" onclick="clearData()">Effacer toutes les données</button>
+</section>
+</aside>
+</div>
+<div class="footer">LAB JOB RADAR · Prototype privé d'administration · Madagascar</div>
+</main>
+<script>
+const KEY='labJobRadar.v1';let offers=JSON.parse(localStorage.getItem(KEY)||'[]');
+function save(){localStorage.setItem(KEY,JSON.stringify(offers));render()}
+function regionGroup(c){return c==='Toamasina'?'Toamasina':c==='Antananarivo'?'Antananarivo':'Autres régions'}
+function render(){
+ const q=document.getElementById('search').value.toLowerCase(),r=document.getElementById('region').value,s=document.getElementById('state').value;
+ document.getElementById('total').textContent=offers.length;
+ document.getElementById('verified').textContent=offers.filter(x=>x.status==='verified').length;
+ document.getElementById('pending').textContent=offers.filter(x=>x.status==='pending').length;
+ document.getElementById('applied').textContent=offers.filter(x=>x.status==='applied').length;
+ let list=offers.filter(x=>(!q||(x.title+' '+x.org+' '+x.details).toLowerCase().includes(q))&&(!r||regionGroup(x.city)===r)&&(!s||x.status===s)).sort((a,b)=>b.created-a.created);
+ const root=document.getElementById('jobs');
+ if(!list.length){root.innerHTML='<div class="empty">Aucune offre ne correspond à ces filtres.</div>';return}
+ root.innerHTML=list.map(x=>`<article class="job"><div class="jobtop"><div><h4>${esc(x.title)}</h4><div class="company">${esc(x.org)} · ${esc(x.city)}</div></div><span class="tag ${x.status==='verified'?'ok':x.status==='pending'?'warn':x.status==='closed'?'bad':''}">${statusName(x.status)}</span></div><div class="tags"><span class="tag">Ajoutée le ${new Date(x.created).toLocaleDateString('fr-FR')}</span>${x.deadline?`<span class="tag">Limite : ${esc(x.deadline)}</span>`:''}</div><p>${esc(x.details||'Aucune description ajoutée.')}</p>${x.contact?`<p><b>Contact :</b> ${esc(x.contact)}</p>`:''}<div class="jobactions">${x.source?`<a class="btn secondary small" href="${esc(x.source)}" target="_blank" rel="noopener">Voir l'annonce ↗</a>`:''}<button class="btn secondary small" onclick="changeStatus('${x.id}')">Changer le statut</button><button class="btn secondary small" onclick="alertOffer('${x.id}')">Créer une alerte</button><button class="btn danger small" onclick="removeOffer('${x.id}')">Supprimer</button></div></article>`).join('');
+}
+function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function statusName(s){return ({pending:'À vérifier',verified:'Vérifiée / ouverte',applied:'Candidature envoyée',closed:'Clôturée'})[s]||s}
+document.getElementById('jobform').addEventListener('submit',e=>{
+ e.preventDefault();const x={id:Date.now().toString(),title:title.value.trim(),org:org.value.trim(),city:city.value,deadline:deadline.value,source:source.value.trim(),details:details.value.trim(),contact:contact.value.trim(),status:'pending',created:Date.now()};
+ offers.unshift(x);save();e.target.reset();document.getElementById('jobs').scrollIntoView({behavior:'smooth'});alert('Offre enregistrée comme « À vérifier ». Vérifie la source et les dates avant de la valider.');
+});
+function changeStatus(id){const x=offers.find(o=>o.id===id);const states=['pending','verified','applied','closed'];x.status=states[(states.indexOf(x.status)+1)%states.length];save();if(x.status==='verified')notify(x)}
+function removeOffer(id){if(confirm('Supprimer cette offre ?')){offers=offers.filter(x=>x.id!==id);save()}}
+function notify(x){
+ const msg=`Nouvelle offre de laboratoire : ${x.title} — ${x.org}, ${x.city}. Statut : vérifiée / ouverte. ${x.source||''}`;
+ if(document.getElementById('browserOn').checked&&'Notification'in window&&Notification.permission==='granted')new Notification('LAB JOB RADAR',{body:`${x.title} — ${x.org} (${x.city})`});
+ if(document.getElementById('emailOn').checked&&document.getElementById('emailTo').value){const u=document.getElementById('emailTo').value;window.open(`mailto:${encodeURIComponent(u)}?subject=${encodeURIComponent('LAB JOB RADAR — Offre vérifiée')}&body=${encodeURIComponent(msg)}`,'_blank')}
+ if(document.getElementById('waOn').checked){const phone=document.getElementById('phone').value.replace(/\D/g,'');window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank')}
+}
+function alertOffer(id){const x=offers.find(o=>o.id===id);if(x.status!=='verified'&&!confirm('Cette annonce n’est pas marquée comme vérifiée. Préparer quand même une alerte ?'))return;notify(x)}
+async function askNotifications(){if(!('Notification'in window)){alert('Les notifications ne sont pas prises en charge par ce navigateur.');return}const p=await Notification.requestPermission();alert(p==='granted'?'Notifications autorisées.':'Autorisation non accordée.')}
+function exportData(){const b=new Blob([JSON.stringify(offers,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='lab-job-radar-donnees.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=JSON.parse(rd.result);if(!Array.isArray(d))throw Error();offers=d;save();alert('Importation terminée.')}catch{alert('Fichier JSON invalide.')}};rd.readAsText(f)}
+function clearData(){if(confirm('Effacer définitivement toutes les offres enregistrées dans ce navigateur ?')){offers=[];save()}}
+render();
+</script>
+</body></html>
