@@ -109,4 +109,19 @@ function importData(e){const f=e.target.files[0];if(!f)return;const rd=new FileR
 function clearData(){if(confirm('Effacer définitivement toutes les offres enregistrées dans ce navigateur ?')){offers=[];save()}}
 render();
 </script>
-</body></html>
+</body></html> 
+<!-- CONNEXION SUPABASE - LAB JOB RADAR -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://idizhubshhuvtjewbltz.supabase.co";
+
+const SUPABASE_ANON_KEY = "COLLE_TA_PUBLISHABLE_KEY_ICI";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+console.log("LAB JOB RADAR connecté à Supabase !");
+</script>
